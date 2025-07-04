@@ -52,4 +52,15 @@ class AuthController extends Controller
 
         return back()->with('error', 'Error en el registro: ' . $response->body());
     }
+
+    public function logout()
+    {
+        if (Session::has('access_token')) {
+            Http::withToken(Session::get('access_token'))
+                ->post($this->authApiUrl.'/api/logout');
+        }
+
+        Session::forget(['access_token', 'refresh_token', 'user']);
+        return redirect('/');
+    }
 }
