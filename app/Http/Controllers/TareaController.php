@@ -58,4 +58,14 @@ class TareaController extends Controller
             ? redirect('/')
             : back()->with('error', 'Error al crear la tarea');
     }
+
+    public function eliminar($id)
+    {
+        $token = Session::get('access_token');
+        $response = Http::withToken($token)->delete("{$this->tareasApiUrl}/tareas/{$id}");
+
+        return $response->successful()
+            ? redirect('/')
+            : back()->with('error', 'Error al eliminar la tarea');
+    }
 }
