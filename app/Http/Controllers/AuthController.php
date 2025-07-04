@@ -31,4 +31,23 @@ class AuthController extends Controller
 
         return back()->with('error', 'Credenciales incorrectas');
     }
+
+    public function registrar(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|'
+        ]);
+
+        $response = Http::post($this->authApiUrl.'/api/user', $request->only([
+            'name', 'email', 'password', 'password_confirmation'
+        ]));
+
+        if ($response->successful()) {
+            return redirect('/')->with('success', 'Registro exitoso. Por favor inicia sesión.');
+        }
+
+        return back()->with('error', 'Error en el registro: ' . $response->body());
+    }
 }
