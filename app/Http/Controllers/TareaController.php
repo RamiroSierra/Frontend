@@ -21,4 +21,17 @@ class TareaController extends Controller
             'loggedIn' => Session::has('access_token')
         ]);
     }
+
+    public function detalles($id)
+    {
+        $response = Http::get("{$this->tareasApiUrl}/tareas/{$id}");
+
+        $tarea = $response->json();
+        $tarea['categorias'] = explode(',', $tarea['categorias'] ?? '');
+
+        return view('tareas.detalles', [
+            'tarea' => $tarea,
+            'loggedIn' => Session::has('access_token')
+        ]);
+    }
 }
