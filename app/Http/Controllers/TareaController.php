@@ -103,4 +103,28 @@ class TareaController extends Controller
             : back()->with('error', 'Error al actualizar la tarea');
     }
 
+    public function formularioComentar($id)
+    {
+        $response = Http::get("{$this->tareasApiUrl}/tareas/{$id}");
+        $tarea = $response->successful() ? $response->json() : null;
+
+        return view('tareas.comentar', [
+            'tarea' => $tarea,
+            'loggedIn' => true
+        ]);
+    }
+
+    public function guardarComentario(Request $request, $id)
+    {
+        $token = Session::get('access_token');
+
+        $response = Http::withToken($token)->post("{$this->tareasApiUrl}/tareas/{$id}/comentarios", [
+            'texto' => $request->texto
+        ]);
+        
+        return $response->successful()
+            ? redirect()->route('tareas.detalles', $id)
+            : back()->with('error', 'Error al agregar comentario');
+    }
+
 }

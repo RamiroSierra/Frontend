@@ -18,5 +18,7 @@ Route::get('/tareas/{id}', [TareaController::class, 'detalles'])->name('tareas.d
 Route::get('/tareas/crear', [TareaController::class, 'formularioCrear'])->name('tareas.crear');
 Route::post('/tareas', [TareaController::class, 'guardar'])->name('tareas.guardar');
 Route::delete('/tareas/{id}', [TareaController::class, 'eliminar'])->name('tareas.eliminar');
-    Route::get('/tareas/{id}/editar', [TareaController::class, 'formularioEditar'])->name('tareas.editar');
-    Route::put('/tareas/{id}', [TareaController::class, 'actualizar'])->name('tareas.actualizar');
+Route::get('/tareas/{id}/editar', [TareaController::class, 'formularioEditar'])->name('tareas.editar');
+Route::put('/tareas/{id}', [TareaController::class, 'actualizar'])->name('tareas.actualizar');
+Route::get('/tareas/{id}/comentar', [TareaController::class, 'formularioComentar'])->name('tareas.comentar');
+Route::post('/tareas/{id}/comentarios', [TareaController::class, 'guardarComentario'])->name('tareas.comentario.guardar');
