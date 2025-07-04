@@ -9,3 +9,5 @@ Route::get('/', [TareaController::class, 'listar'])->name('home');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/registrar', function () {return view('auth.registrar', ['loggedIn' => false]);})->name('registrar.form');
 Route::post('/registrar', [AuthController::class, 'registrar'])->name('registrar');
+
+Route::get('/tareas/{id}', [TareaController::class, 'detalles'])->name('tareas.detalles');
