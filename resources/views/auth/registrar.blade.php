@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Agregar Comentario</title>
+    <title>Registrar Usuario</title>
 </head>
 <body>
-    <form action="{{ route('logout') }}" method="POST">
+    <h2>Registrar Usuario</h2>
+    <form method="POST" action="{{ route('registrar') }}">
         @csrf
-        <button type="submit">Deslogear</button>
+        <input type="text" name="name" placeholder="Nombre" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Contraseña" required><br>
+        <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required><br>
+        <button type="submit">Registrar</button>
     </form>
-    <a href="{{ route('home') }}">inicio</a>
-    <h1>Agregar Comentario a: {{ $tarea['titulo'] }}</h1>
-    <form method="POST" action="{{ route('tareas.comentario.guardar', $tarea['id']) }}">
-        @csrf
-        <textarea name="texto" placeholder="Escribe tu comentario" required></textarea><br>
-        <button type="submit">Agregar Comentario</button>
-    </form>
+    <a href="{{ route('home') }}">Volver atrás</a>
 </body>
 </html>

@@ -4,6 +4,13 @@
     <title>Agregar Comentario</title>
 </head>
 <body>
+    @if(session('error'))
+        <div style="color: red;">{{ session('error') }}</div>
+    @endif
+    
+    @if(session('success'))
+        <div style="color: green;">{{ session('success') }}</div>
+    @endif
     <form action="{{ route('logout') }}" method="POST">
         @csrf
         <button type="submit">Deslogear</button>
