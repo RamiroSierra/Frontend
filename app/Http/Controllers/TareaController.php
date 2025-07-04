@@ -36,4 +36,26 @@ class TareaController extends Controller
             'loggedIn' => Session::has('access_token')
         ]);
     }
+
+    public function formularioCrear()
+    {
+        return view('tareas.crear', ['loggedIn' => true]);
+    }
+
+    public function guardar(Request $request)
+    {
+        $token = Session::get('access_token');
+
+        $response = Http::withToken($token)->post($this->tareasApiUrl . '/tareas', [
+            'titulo' => $request->titulo,
+            'asignado_id' => $request->asignado_id,
+            'cuerpo' => $request->cuerpo,
+            'fecha_expiracion' => $request->fecha_expiracion,
+            'categorias' => $request->categorias
+        ]);
+
+        return $response->successful()
+            ? redirect('/')
+            : back()->with('error', 'Error al crear la tarea');
+    }
 }

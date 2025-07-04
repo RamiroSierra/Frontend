@@ -14,3 +14,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/tareas/{id}', [TareaController::class, 'detalles'])->name('tareas.detalles');
+
+Route::get('/tareas/crear', [TareaController::class, 'formularioCrear'])->name('tareas.crear');
+    Route::post('/tareas', [TareaController::class, 'guardar'])->name('tareas.guardar');
