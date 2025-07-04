@@ -68,4 +68,39 @@ class TareaController extends Controller
             ? redirect('/')
             : back()->with('error', 'Error al eliminar la tarea');
     }
+
+    public function formularioEditar($id)
+    {
+        $response = Http::get("{$this->tareasApiUrl}/tareas/{$id}");
+
+        if (!$response->successful()) {
+            return redirect('/')->with('error', 'Tarea no encontrada');
+        }
+
+        $tarea = $response->json();
+        $tarea['categorias'] = explode(',', $tarea['categorias'] ?? '');
+
+        return view('tareas.editar', [
+            'tarea' => $tarea,
+            'loggedIn' => true
+        ]);
+    }
+
+    public function actualizar(Request $request, $id)
+    {
+        $token = Session::get('access_token');
+
+        $response = Http::withToken($token)->put("{$this->tareasApiUrl}/tareas/{$id}", [
+            'titulo' => $request->titulo,
+            'asignado_id' => $request->asignado_id,
+            'cuerpo' => $request->cuerpo,
+            'fecha_expiracion' => $request->fecha_expiracion,
+            'categorias' => $request->categorias
+        ]);
+
+        return $response->successful()
+            ? redirect()->route('tareas.detalles', $id)
+            : back()->with('error', 'Error al actualizar la tarea');
+    }
+
 }
