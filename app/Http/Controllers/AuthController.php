@@ -61,6 +61,6 @@ class AuthController extends Controller
         }
 
         Session::forget(['access_token', 'refresh_token', 'user']);
-        return redirect('/');
+        return redirect('/')->with('success', 'Sesión cerrada correctamente');
     }
 }
